@@ -38,7 +38,9 @@ const Pictures = () => {
 
   return (
     <Container>
-      {pictures.map(picture => (
+      {pictures.kind === 'LOADING' && <div>Loading...</div>}
+      {pictures.kind === 'FAILURE' && <div>Error: {pictures.error}</div>}
+      {pictures.kind === 'SUCCESS' && pictures.pictures.map(picture => (
         <Image
           key={picture.previewFormat}
           src={picture.previewFormat}
