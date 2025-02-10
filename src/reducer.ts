@@ -7,11 +7,13 @@ import fakeData from './fake-datas.json';
 export type State = {
   counter: number,
   pictures: Picture[];
+  pictureSelected:Picture | null,
 }
 
 export const defaultState: State = {
   counter: 0,
   pictures: [],
+  pictureSelected: null,
 }
 
 export const reducer = (state: State | undefined, action: Actions): State | Loop<State> => {
@@ -26,9 +28,9 @@ export const reducer = (state: State | undefined, action: Actions): State | Loop
         pictures: fakeData.slice(0, Math.max(3, state.counter - 1)),
        };
     case 'SELECT_PICTURE':
-      throw 'Not Implemented';
+      return { ...state, pictureSelected: action.picture };
     case 'CLOSE_MODAL':
-      throw 'Not Implemented';
+      return { ...state, pictureSelected: null };
     case 'FETCH_CATS_REQUEST':
       throw 'Not Implemented';
     case 'FETCH_CATS_COMMIT':
@@ -42,8 +44,6 @@ export const counterSelector = (state: State) => state.counter;
 
 export const picturesSelector = (state: State) => state.pictures;
 
-export const getSelectedPicture = (state: State) => {
-  throw 'Not Implemented';
-};
+export const getSelectedPicture = (state: State) => state.pictureSelected;
 
 export default compose(liftState, reducer);
